@@ -44,12 +44,10 @@ sequelize.sync().then(() => {
 
 app.get("/", async (req, res) => {
   try {
-    
     const articles = await Article.findAll({
       include: Author, // Include the Author model
     });
 
-    
     res.render("home", { articles });
   } catch (error) {
     console.error("Error:", error);
@@ -71,12 +69,13 @@ app.get("/articles", async (req, res) => {
 
 app.get("/admin", async (req, res) => {
   try {
-    const articles = await Article.findAll();
+    const articles = await Article.findAll({
+      include: Author,
+    });
     res.render("admin", { articles });
   } catch (error) {
-    console.error("Error:", error);
-    // Handle the error and send an appropriate response
-    res.status(500).send("An error occurred.");
+    console.error(error);
+    res.status(500).json({ error: "Error al obtener los artículos" });
   }
 });
 
