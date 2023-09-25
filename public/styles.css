@@ -42,3 +42,8 @@ body {
 .navbar-right .admin-button:hover {
   background-color: #0056b3;
 }
+
+a {
+  text-decoration: none; /* Quita el subrayado */
+  color: #000000; /* Cambia el color de los enlaces, puedes ajustarlo según tu preferencia */
+}
