@@ -42,14 +42,12 @@ sequelize.sync().then(() => {
 
 app.get("/", async (req, res) => {
   try {
-    // Fetch articles from your database using Sequelize
+    
     const articles = await Article.findAll();
 
-    // Convert articles to an array for use with for...of
-    const articlesArray = articles.map((article) => article.toJSON());
 
-    // Render the 'home.ejs' template with the fetched articles as an array
-    res.render("home", { articles: articlesArray });
+    
+    res.render("home", { articles });
   } catch (error) {
     console.error("Error:", error);
     // Handle the error and send an appropriate response
