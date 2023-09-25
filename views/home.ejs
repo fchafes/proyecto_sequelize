@@ -13,6 +13,10 @@
       <% articles.forEach((article) => { %>
       <li>
         <h2><%= article.title %></h2>
+        <p>
+          <strong>Author:</strong> <%= article.author.name %> <%=
+          article.author.lastname %>
+        </p>
       </li>
       <% }); %>
     </ul>

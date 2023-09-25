@@ -45,8 +45,9 @@ sequelize.sync().then(() => {
 app.get("/", async (req, res) => {
   try {
     
-    const articles = await Article.findAll();
-
+    const articles = await Article.findAll({
+      include: Author, // Include the Author model
+    });
 
     
     res.render("home", { articles });
