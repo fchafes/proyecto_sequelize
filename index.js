@@ -1,6 +1,6 @@
-const express = require('express');
+const express = require("express");
 const app = express();
-const { Sequelize, Model, DataTypes } = require('sequelize');
+const { Sequelize, Model, DataTypes } = require("sequelize");
 
 app.use(express.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
@@ -40,5 +40,7 @@ sequelize.sync().then(() => {
 });
 
 app.listen(3000, () => {
-    console.log('Servidor corriendo en puerto 3000');
+  console.log("Servidor corriendo en puerto 3000");
 });
+
+//test
