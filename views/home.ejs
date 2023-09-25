@@ -1,10 +1,8 @@
 <h1>Blog</h1>
 <ul>
-  <% for (const article of articles) { %>
-    <li>
-      <h2><%= article.title %></h2>
-      <p><%= article.content %></p>
-      <img src="<%= article.image %>" alt="<%= article.title %>" />
-    </li>
-  <% } %>
+  <% articles.forEach((article) => { %>
+  <li>
+    <h2><%= article.title %></h2>
+  </li>
+  <% }); %>
 </ul>
