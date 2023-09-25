@@ -5,7 +5,7 @@ const { Sequelize, Model, DataTypes } = require("sequelize");
 app.use(express.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
 
-const sequelize = new Sequelize("bloger", "root", "rootroot", {
+const sequelize = new Sequelize("bloger", "root", process.env.DB_PASSWORD, {
   host: "127.0.0.1",
   port: 3306,
   dialect: "mysql",
