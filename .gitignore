@@ -1,0 +1,5 @@
+# Excluir archivos sensibles
+.env
+sensitivefile.txt
+/logs/
+/node_modules/

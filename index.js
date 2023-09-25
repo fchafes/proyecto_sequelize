@@ -1,9 +1,15 @@
+require("dotenv").config();
+
 const express = require("express");
 const app = express();
 const { Sequelize, Model, DataTypes } = require("sequelize");
 
 app.use(express.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
+
+const dbHost = process.env.DB_HOST;
+const dbUser = process.env.DB_USER;
+const dbPassword = process.env.DB_PASSWORD;
 
 const sequelize = new Sequelize("bloger", "root", "rootroot", {
   host: "127.0.0.1",
