@@ -1,0 +1,44 @@
+body {
+  background-color: #ffffff;
+  font-family: Arial, sans-serif;
+  margin: 0;
+}
+.navbar {
+  background-color: #000;
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 20px;
+}
+
+.navbar-left {
+  margin-left: 20%;
+}
+
+.logo {
+  font-size: 24px;
+  color: white;
+}
+
+.navbar-right {
+  background-color: #007bff;
+  color: #fff;
+  padding: 5px 10px;
+  border: none;
+  text-decoration: none;
+  border-radius: 5px;
+  margin-right: 30%;
+}
+
+.admin-button {
+  background-color: #007bff;
+  color: #fff;
+  padding: 5px 10px;
+  border: none;
+  text-decoration: none;
+  border-radius: 5px;
+}
+
+.navbar-right .admin-button:hover {
+  background-color: #0056b3;
+}
