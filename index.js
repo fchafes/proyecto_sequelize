@@ -40,7 +40,7 @@ sequelize.sync().then(() => {
   console.log("Se han creado las tablas");
 });
 
-app.listen(3000, () => {
+app.listen(process.env.PORT, () => {
   console.log("Servidor corriendo en puerto 3000");
 });
 
