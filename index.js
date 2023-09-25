@@ -57,6 +57,50 @@ app.get("/", async (req, res) => {
   }
 });
 
+app.get("/articles", async (req, res) => {
+  try {
+    const articles = await Article.findAll();
+    res.render("articles", { articles });
+  } catch (error) {
+    console.error("Error:", error);
+    // Handle the error and send an appropriate response
+    res.status(500).send("An error occurred.");
+  }
+});
+
+app.get("/admin", async (req, res) => {
+  try {
+    const articles = await Article.findAll();
+    res.render("admin", { articles });
+  } catch (error) {
+    console.error("Error:", error);
+    // Handle the error and send an appropriate response
+    res.status(500).send("An error occurred.");
+  }
+});
+
+app.get("/form_create", async (req, res) => {
+  try {
+    const articles = await Article.findAll();
+    res.render("form_create", { articles });
+  } catch (error) {
+    console.error("Error:", error);
+    // Handle the error and send an appropriate response
+    res.status(500).send("An error occurred.");
+  }
+});
+
+app.get("/form_edit", async (req, res) => {
+  try {
+    const articles = await Article.findAll();
+    res.render("form_edit", { articles });
+  } catch (error) {
+    console.error("Error:", error);
+    // Handle the error and send an appropriate response
+    res.status(500).send("An error occurred.");
+  }
+});
+
 app.listen(process.env.PORT, () => {
   console.log("Servidor corriendo en puerto");
 });
