@@ -1,25 +1,25 @@
 header {
-    background-image: url("https://images.unsplash.com/photo-1518665750801-883c188a660d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80");
-    height: 350px;
+  background-image: url("https://images.pexels.com/photos/442574/pexels-photo-442574.jpeg");
+  height: 350px;
 }
 footer {
-    margin-top: auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    color: white;
-    padding: 20px; 
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: white;
+  padding: 20px;
 }
 footer p {
-    color: #76757D;
-font-family: Lora;
-font-size: 17.5px;
-font-style: italic;
-font-weight: 400;
-line-height: normal;
+  color: #76757d;
+  font-family: Lora;
+  font-size: 17.5px;
+  font-style: italic;
+  font-weight: 400;
+  line-height: normal;
 }
 footer svg {
-    width: 122px; 
-    height: 30px; 
-    margin-bottom: 10px; 
+  width: 122px;
+  height: 30px;
+  margin-bottom: 10px;
 }
