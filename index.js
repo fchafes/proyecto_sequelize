@@ -106,7 +106,7 @@ app.get("/admin/form_edit/:id", async (req, res) => {
     if (!article) {
       return res.status(404).json({ error: "Artículo no encontrado" });
     }
-    res.render("form_edit", { article });
+    res.render("form_edit", { article }); // Renderiza la vista de edición con los datos del artículo
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Error al cargar el artículo para editar" });
@@ -121,6 +121,7 @@ app.post("/admin/form_edit/:id", async (req, res) => {
     if (!article) {
       return res.status(404).json({ error: "Artículo no encontrado" });
     }
+
     article.title = title;
     article.content = content;
     article.image = image;
@@ -143,7 +144,12 @@ app.post("/admin/delete-article/:id", async (req, res) => {
     if (!article) {
       return res.status(404).json({ error: "Artículo no encontrado" });
     }
+    const authorId = article.authorId;
+
     await article.destroy();
+
+    await Author.update({ lastArticleId: null }, { where: { id: authorId } });
+
     res.redirect("/admin");
   } catch (error) {
     console.error(error);

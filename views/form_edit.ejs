@@ -10,15 +10,20 @@
   <body>
     <h1 class="page-title">Editar Artículo</h1>
     <div class="container">
-      <form action="/admin/form_edit" method="POST" class="create-article-form">
+      <form action="/admin/form_edit/<%= article.id %>" method="POST">
         <label for="title">Título:</label>
-        <input type="text" name="title" required /><br />
+        <input
+          type="text"
+          name="title"
+          value="<%= article.title %>"
+          required
+        /><br />
         <label for="content">Contenido:</label>
-        <textarea name="content" required></textarea><br />
-        <label for="image">URL de la Imagen:</label>
-        <input type="text" name="image" /><br />
-        <label for="autor_id">Autor ID:</label>
-        <select name="autor_id" id="autor_id">
+        <textarea name="content" required><%= article.content %></textarea
+        ><br />
+
+        <label for="authorId">ID del Autor:</label>
+        <select name="authorId" id="authorId">
           <option value="1">1</option>
           <option value="2">2</option>
           <option value="3">3</option>
@@ -27,7 +32,7 @@
           <option value="6">6</option>
           <option value="7">7</option>
         </select>
-        <button type="submit" class="submit-button">Crear Artículo</button>
+        <button type="submit" class="submit-button">Actualizar Artículo</button>
       </form>
     </div>
   </body>

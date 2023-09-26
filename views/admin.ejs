@@ -60,7 +60,10 @@
               />
             </td>
             <td><%= article.createdAt %></td>
-            <td><%= article.author.name %> <%= article.author.lastname %></td>
+            <td>
+              <%= article.author ? article.author.name : 'Autor Desconocido' %>
+              <%= article.author ? article.author.lastname : '' %>
+            </td>
             <td>
               <form action="/admin/form_edit/<%= article.id %>" method="GET">
                 <button class="edit-button" type="submit">Editar</button>
@@ -75,7 +78,6 @@
             </td>
           </tr>
           <% }); %>
-          <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
         </tbody>
       </table>
     </div>

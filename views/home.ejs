@@ -27,13 +27,18 @@
     <div class="container">
       <div class="row">
           <div class="col-md-6 mx-auto bg-white p-5">
-              <% articles.forEach((article) => { %>
-                          <a href="/articleId/<%= article.id %>">
-                              <h2><%= article.title %></h2>
-                          </a>
-                          <p>Creado por <%= article.author.name %> <%= article.author.lastname %> <%= article.createdAt %></p>
-                    <hr>
-              <% }); %>
+            <% articles.forEach((article) => { %>
+              <a href="/articleId/<%= article.id %>">
+                <h2><%= article.title %></h2>
+              </a>
+              <p>
+                Creado por <%= article.author ? article.author.name : 'Autor Desconocido' %> 
+                <%= article.author ? article.author.lastname : '' %> 
+                <%= article.createdAt %>
+              </p>
+              <hr>
+            <% }); %>
+            
           </div>
       </div>
   </div>
