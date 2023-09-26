@@ -44,12 +44,10 @@ sequelize.sync().then(() => {
 
 app.get("/", async (req, res) => {
   try {
-    
     const articles = await Article.findAll({
       include: Author, // Include the Author model
     });
 
-    
     res.render("home", { articles });
   } catch (error) {
     console.error("Error:", error);
@@ -71,12 +69,13 @@ app.get("/articles", async (req, res) => {
 
 app.get("/admin", async (req, res) => {
   try {
-    const articles = await Article.findAll();
+    const articles = await Article.findAll({
+      include: Author,
+    });
     res.render("admin", { articles });
   } catch (error) {
-    console.error("Error:", error);
-    // Handle the error and send an appropriate response
-    res.status(500).send("An error occurred.");
+    console.error(error);
+    res.status(500).json({ error: "Error al obtener los artículos" });
   }
 });
 
@@ -95,6 +94,27 @@ app.get("/form_edit", async (req, res) => {
   try {
     const articles = await Article.findAll();
     res.render("form_edit", { articles });
+  } catch (error) {
+    console.error("Error:", error);
+    // Handle the error and send an appropriate response
+    res.status(500).send("An error occurred.");
+  }
+});
+
+app.get("/articleId/:id", async (req, res) => {
+  try {
+    const articleId = req.params.id;
+    const article = await Article.findByPk(articleId, {
+      include: Author,
+    });
+
+    if (!article) {
+      // Handle the case where the article doesn't exist
+      res.status(404).send("Article not found");
+      return;
+    }
+
+    res.render("articleId", { article });
   } catch (error) {
     console.error("Error:", error);
     // Handle the error and send an appropriate response

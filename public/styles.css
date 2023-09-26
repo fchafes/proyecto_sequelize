@@ -44,6 +44,91 @@ body {
 }
 
 a {
-  text-decoration: none; /* Quita el subrayado */
-  color: #000000; /* Cambia el color de los enlaces, puedes ajustarlo según tu preferencia */
+  text-decoration: none;
+  color: #000000;
+}
+
+.create-article-button.custom-button {
+  background-color: #0c66189f;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.create-article-container {
+  justify-content: flex-end;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  margin-right: 20px;
+  display: flex;
+  margin-left: auto;
+  align-items: center;
+}
+
+.table-container {
+  padding: 20px;
+  text-align: center;
+}
+
+.table-container h2 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.article-table th,
+.article-table td {
+  border: 1px solid #ccc;
+  padding: 8px 12px;
+}
+
+.edit-button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 5px;
+}
+.delete-button {
+  background-color: #ff004c;
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 5px;
+  margin-top: 10px;
+}
+
+.edit-article-form label {
+  font-weight: bold;
+}
+
+.edit-article-form input[type="text"],
+.edit-article-form input[type="number"],
+.edit-article-form textarea {
+  width: 100%;
+  padding: 20px;
+  margin: 20px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.edit-article-form button[type="submit"] {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.img-articles {
+  width: 100%;
 }
