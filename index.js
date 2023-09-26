@@ -3,6 +3,8 @@ const express = require("express");
 const app = express();
 const path = require("path");
 const { Sequelize, Model, DataTypes } = require("sequelize");
+const { format } = require('date-fns');
+const esLocale = require('date-fns/locale/es');
 
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: true }));
@@ -49,17 +51,6 @@ app.get("/", async (req, res) => {
     });
 
     res.render("home", { articles });
-  } catch (error) {
-    console.error("Error:", error);
-    // Handle the error and send an appropriate response
-    res.status(500).send("An error occurred.");
-  }
-});
-
-app.get("/articles", async (req, res) => {
-  try {
-    const articles = await Article.findAll();
-    res.render("articles", { articles });
   } catch (error) {
     console.error("Error:", error);
     // Handle the error and send an appropriate response
@@ -165,15 +156,16 @@ app.get("/articleId/:id", async (req, res) => {
     });
 
     if (!article) {
-      // Handle the case where the article doesn't exist
       res.status(404).send("Article not found");
       return;
     }
-
-    res.render("articleId", { article });
+    const dayNumber = format(article.createdAt,"dd", { locale: esLocale });
+    const monthName = format(article.createdAt, "MMMM", { locale: esLocale });
+    const yearNumber = format(article.createdAt, "yyy", { locale: esLocale });
+    const formattedDate = `${dayNumber} de ${monthName}, ${yearNumber}`
+    res.render("articleId", { article, formattedDate });
   } catch (error) {
     console.error("Error:", error);
-    // Handle the error and send an appropriate response
     res.status(500).send("An error occurred.");
   }
 });
