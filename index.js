@@ -136,6 +136,21 @@ app.post("/admin/form_edit/:id", async (req, res) => {
   }
 });
 
+app.post("/admin/delete-article/:id", async (req, res) => {
+  const articleId = req.params.id;
+  try {
+    const article = await Article.findByPk(articleId);
+    if (!article) {
+      return res.status(404).json({ error: "Artículo no encontrado" });
+    }
+    await article.destroy();
+    res.redirect("/admin");
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Error al eliminar el artículo" });
+  }
+});
+
 app.get("/articleId/:id", async (req, res) => {
   try {
     const articleId = req.params.id;
