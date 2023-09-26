@@ -8,6 +8,7 @@
     <title>Crear Artículo</title>
   </head>
   <body>
+    <%- include("partials/navbar.ejs") %>
     <h1 class="page-title">Editar Artículo</h1>
     <div class="container">
       <form action="/admin/form_edit/<%= article.id %>" method="POST">
