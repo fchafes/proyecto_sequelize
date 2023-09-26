@@ -99,14 +99,40 @@ app.post("/admin/form_create", async (req, res) => {
   }
 });
 
-app.get("/form_edit", async (req, res) => {
+app.get("/admin/form_edit/:id", async (req, res) => {
+  const articleId = req.params.id;
   try {
-    const articles = await Article.findAll();
-    res.render("form_edit", { articles });
+    const article = await Article.findByPk(articleId);
+    if (!article) {
+      return res.status(404).json({ error: "Artículo no encontrado" });
+    }
+    res.render("form_edit", { article });
   } catch (error) {
-    console.error("Error:", error);
-    // Handle the error and send an appropriate response
-    res.status(500).send("An error occurred.");
+    console.error(error);
+    res.status(500).json({ error: "Error al cargar el artículo para editar" });
+  }
+});
+
+app.post("/admin/form_edit/:id", async (req, res) => {
+  const articleId = req.params.id;
+  const { title, content, image, authorId } = req.body;
+  try {
+    const article = await Article.findByPk(articleId);
+    if (!article) {
+      return res.status(404).json({ error: "Artículo no encontrado" });
+    }
+    article.title = title;
+    article.content = content;
+    article.image = image;
+    article.authorId = authorId;
+
+    await article.save();
+    console.log("Editando artículo...");
+
+    res.redirect("/admin");
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Error al actualizar el artículo" });
   }
 });
 
