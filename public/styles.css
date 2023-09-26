@@ -155,3 +155,56 @@ footer svg {
 .img-articles {
   width: 100%;
 }
+
+.page-title {
+  margin-top: 5%;
+}
+
+.edit-article-form input[type="text"],
+.edit-article-form input[type="number"],
+.edit-article-form textarea {
+  width: 100%;
+  padding: 20px;
+  margin: 20px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.edit-article-form button[type="submit"] {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 4px;
+  margin-left: 20px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.create-article-form label {
+  font-weight: bold;
+}
+
+.create-article-form input[type="text"],
+.create-article-form input[type="number"],
+.create-article-form textarea {
+  width: 100%;
+  padding: 20px;
+  margin: 20px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.create-article-form button[type="submit"] {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
