@@ -79,9 +79,17 @@ app.get("/admin", async (req, res) => {
   }
 });
 
-app.get("/admin/form_create", (req, res) => {
-  res.render("form_create");
+app.get("/admin/form_create", async (req, res) => {
+  try {
+    const authors = await Author.findAll({
+    });
+  res.render("form_create",{authors});
+} catch (error) {
+  console.error(error);
+  res.status(500).json({ error: "Error al obtener los artículos" });
+}
 });
+
 
 app.post("/admin/form_create", async (req, res) => {
   const { title, content, image, authorId } = req.body;
@@ -102,11 +110,16 @@ app.post("/admin/form_create", async (req, res) => {
 app.get("/admin/form_edit/:id", async (req, res) => {
   const articleId = req.params.id;
   try {
-    const article = await Article.findByPk(articleId);
+    const article = await Article.findByPk(articleId, {
+      include: Author,
+    });
     if (!article) {
       return res.status(404).json({ error: "Artículo no encontrado" });
     }
-    res.render("form_edit", { article }); // Renderiza la vista de edición con los datos del artículo
+
+    const authors = await Author.findAll(); // Fetch authors here
+
+    res.render("form_edit", { article, authors }); // Pass authors to the view
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Error al cargar el artículo para editar" });

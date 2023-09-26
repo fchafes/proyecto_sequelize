@@ -28,15 +28,11 @@
         <textarea name="content" required></textarea><br />
         <label for="image">URL de la Imagen:</label>
         <input type="text" name="image" /><br />
-        <label for="authorId">Autor ID:</label>
+        <label for="authorId">Author:</label>
         <select name="authorId" id="authorId">
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-          <option value="5">5</option>
-          <option value="6">6</option>
-          <option value="7">7</option>
+          <% for (const author of authors) { %>
+          <option value="<%= author.id %>"><%= author.name %></option>
+          <% } %>
         </select>
         <button type="submit" class="submit-button">Crear Artículo</button>
       </form>
