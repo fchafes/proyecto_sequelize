@@ -1,33 +1,30 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/styles.css" />
+
     <title>Crear Artículo</title>
   </head>
   <body>
-    <h1>Crear Artículo</h1>
-
-    <form action="/articles" method="post">
-      <div>
-        <label for="name">Name:</label>
-        <input type="text" name="name" id="name" />
-      </div>
-
-      <div>
+    <h1 class="page-title">Crear Nuevo Artículo</h1>
+    <div class="container">
+      <form
+        action="/admin/form_create"
+        method="POST"
+        class="create-article-form"
+      >
         <label for="title">Título:</label>
-        <input type="text" name="title" id="title" />
-      </div>
-
-      <div>
+        <input type="text" name="title" required /><br />
         <label for="content">Contenido:</label>
-        <textarea name="content" id="content"></textarea>
-      </div>
-
-      <div>
-        <label for="image">Imagen:</label>
-        <input type="file" name="image" id="image" />
-      </div>
-
-      <input type="submit" value="Crear artículo" />
-    </form>
+        <textarea name="content" required></textarea><br />
+        <label for="image">URL de la Imagen:</label>
+        <input type="text" name="image" /><br />
+        <label for="authorId">ID del Autor:</label>
+        <input type="number" name="authorId" required /><br />
+        <button type="submit" class="submit-button">Crear Artículo</button>
+      </form>
+    </div>
   </body>
 </html>

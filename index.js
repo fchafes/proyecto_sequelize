@@ -79,14 +79,23 @@ app.get("/admin", async (req, res) => {
   }
 });
 
-app.get("/form_create", async (req, res) => {
+app.get("/admin/form_create", (req, res) => {
+  res.render("form_create");
+});
+
+app.post("/admin/form_create", async (req, res) => {
+  const { title, content, image, authorId } = req.body;
   try {
-    const articles = await Article.findAll();
-    res.render("form_create", { articles });
+    const newArticle = await Article.create({
+      title,
+      content,
+      image,
+      authorId,
+    });
+    res.redirect("/");
   } catch (error) {
-    console.error("Error:", error);
-    // Handle the error and send an appropriate response
-    res.status(500).send("An error occurred.");
+    console.error(error);
+    res.status(500).json({ error: "Error al crear un nuevo artículo" });
   }
 });
 
