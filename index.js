@@ -101,6 +101,27 @@ app.get("/form_edit", async (req, res) => {
   }
 });
 
+app.get("/articleId/:id", async (req, res) => {
+  try {
+    const articleId = req.params.id;
+    const article = await Article.findByPk(articleId, {
+      include: Author,
+    });
+
+    if (!article) {
+      // Handle the case where the article doesn't exist
+      res.status(404).send("Article not found");
+      return;
+    }
+
+    res.render("articleId", { article });
+  } catch (error) {
+    console.error("Error:", error);
+    // Handle the error and send an appropriate response
+    res.status(500).send("An error occurred.");
+  }
+});
+
 app.listen(process.env.PORT, () => {
   console.log("Servidor corriendo en puerto");
 });
