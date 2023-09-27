@@ -3,8 +3,8 @@ const express = require("express");
 const app = express();
 const path = require("path");
 const { Sequelize, Model, DataTypes } = require("sequelize");
-const { format } = require('date-fns');
-const esLocale = require('date-fns/locale/es');
+const { format } = require("date-fns");
+const esLocale = require("date-fns/locale/es");
 
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: true }));
@@ -37,13 +37,16 @@ Article.init(
     title: { type: DataTypes.STRING(100) },
     content: { type: DataTypes.STRING },
     image: { type: DataTypes.STRING },
-    customDate: { type: DataTypes.VIRTUAL, get() {
-      const dayNumber = format(this.createdAt,"dd", { locale: esLocale });
-      const monthName = format(this.createdAt, "MMMM", { locale: esLocale });
-      const yearNumber = format(this.createdAt, "yyy", { locale: esLocale });
-      const formattedDate = `${dayNumber} de ${monthName}, ${yearNumber}`;
-      return formattedDate;
-    } },
+    customDate: {
+      type: DataTypes.VIRTUAL,
+      get() {
+        const dayNumber = format(this.createdAt, "dd", { locale: esLocale });
+        const monthName = format(this.createdAt, "MMMM", { locale: esLocale });
+        const yearNumber = format(this.createdAt, "yyy", { locale: esLocale });
+        const formattedDate = `${dayNumber} de ${monthName}, ${yearNumber}`;
+        return formattedDate;
+      },
+    },
   },
   { sequelize, modelName: "article", timestamps: true }
 );
@@ -56,13 +59,16 @@ Comment.init(
     id: { type: DataTypes.BIGINT, autoIncrement: true, primaryKey: true },
     fullName: { type: DataTypes.STRING(100) },
     content: { type: DataTypes.STRING },
-    customDate: { type: DataTypes.VIRTUAL, get() {
-      const dayNumber = format(this.createdAt,"dd", { locale: esLocale });
-      const monthName = format(this.createdAt, "MMMM", { locale: esLocale });
-      const yearNumber = format(this.createdAt, "yyy", { locale: esLocale });
-      const formattedDate = `${dayNumber} de ${monthName}, ${yearNumber}`;
-      return formattedDate;
-    } },
+    customDate: {
+      type: DataTypes.VIRTUAL,
+      get() {
+        const dayNumber = format(this.createdAt, "dd", { locale: esLocale });
+        const monthName = format(this.createdAt, "MMMM", { locale: esLocale });
+        const yearNumber = format(this.createdAt, "yyy", { locale: esLocale });
+        const formattedDate = `${dayNumber} de ${monthName}, ${yearNumber}`;
+        return formattedDate;
+      },
+    },
   },
   { sequelize, modelName: "comment", timestamps: true }
 );
@@ -99,15 +105,13 @@ app.get("/admin", async (req, res) => {
 
 app.get("/admin/form_create", async (req, res) => {
   try {
-    const authors = await Author.findAll({
-    });
-  res.render("form_create",{authors});
-} catch (error) {
-  console.error(error);
-  res.status(500).json({ error: "Error al obtener los artículos" });
-}
+    const authors = await Author.findAll({});
+    res.render("form_create", { authors });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Error al obtener los artículos" });
+  }
 });
-
 
 app.post("/admin/form_create", async (req, res) => {
   const { title, content, image, authorId } = req.body;
@@ -130,15 +134,14 @@ app.post("/articleId/:id", async (req, res) => {
   try {
     const newComment = await Comment.create({
       fullName,
-      content
+      content,
     });
-    res.redirect("/articleId/:id");
+    res.redirect(`/article/${articleId}`);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Error al crear un nuevo comentario" });
   }
 });
-
 
 app.get("/admin/form_edit/:id", async (req, res) => {
   const articleId = req.params.id;
