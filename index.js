@@ -47,13 +47,24 @@ sequelize.sync().then(() => {
 app.get("/", async (req, res) => {
   try {
     const articles = await Article.findAll({
-      include: Author, // Include the Author model
+      include: Author,
     });
+    const formattedArticles = articles.map((article) => {
+      const dayNumber = format(article.createdAt, "dd", { locale: esLocale });
+      const monthName = format(article.createdAt, "MMMM", { locale: esLocale });
+      const yearNumber = format(article.createdAt, "yyyy", { locale: esLocale });
+      const formattedDate = `${dayNumber} de ${monthName}, ${yearNumber}`;
 
-    res.render("home", { articles });
+      return {
+        ...article.toJSON(),
+        formattedDate,
+      };
+    });
+    console.log(formattedArticles);
+    // res.render("home", { articles, formattedDate });
+    res.render("home", { articles: formattedArticles });
   } catch (error) {
     console.error("Error:", error);
-    // Handle the error and send an appropriate response
     res.status(500).send("An error occurred.");
   }
 });
@@ -63,7 +74,18 @@ app.get("/admin", async (req, res) => {
     const articles = await Article.findAll({
       include: Author,
     });
-    res.render("admin", { articles });
+    const formattedArticles = articles.map((article) => {
+      const dayNumber = format(article.createdAt, "dd", { locale: esLocale });
+      const monthName = format(article.createdAt, "MMMM", { locale: esLocale });
+      const yearNumber = format(article.createdAt, "yyyy", { locale: esLocale });
+      const formattedDate = `${dayNumber} de ${monthName}, ${yearNumber}`;
+
+      return {
+        ...article.toJSON(),
+        formattedDate,
+      };
+    });
+    res.render("admin", { articles: formattedArticles });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Error al obtener los artículos" });
@@ -175,7 +197,7 @@ app.get("/articleId/:id", async (req, res) => {
     const dayNumber = format(article.createdAt,"dd", { locale: esLocale });
     const monthName = format(article.createdAt, "MMMM", { locale: esLocale });
     const yearNumber = format(article.createdAt, "yyy", { locale: esLocale });
-    const formattedDate = `${dayNumber} de ${monthName}, ${yearNumber}`
+    const formattedDate = `${dayNumber} de ${monthName}, ${yearNumber}`;
     res.render("articleId", { article, formattedDate });
   } catch (error) {
     console.error("Error:", error);
