@@ -14,6 +14,9 @@ const sequelize = new Sequelize("bloger", "root", process.env.DB_PASSWORD, {
   host: "127.0.0.1",
   port: 3306,
   dialect: "mysql",
+  // define: {
+  //   underscored: true,
+  // },
 });
 
 class Author extends Model {}
@@ -46,6 +49,25 @@ Article.init(
 );
 
 Article.belongsTo(Author);
+
+class Comment extends Model {}
+Comment.init(
+  {
+    id: { type: DataTypes.BIGINT, autoIncrement: true, primaryKey: true },
+    fullName: { type: DataTypes.STRING(100) },
+    content: { type: DataTypes.STRING },
+    customDate: { type: DataTypes.VIRTUAL, get() {
+      const dayNumber = format(this.createdAt,"dd", { locale: esLocale });
+      const monthName = format(this.createdAt, "MMMM", { locale: esLocale });
+      const yearNumber = format(this.createdAt, "yyy", { locale: esLocale });
+      const formattedDate = `${dayNumber} de ${monthName}, ${yearNumber}`;
+      return formattedDate;
+    } },
+  },
+  { sequelize, modelName: "comment", timestamps: true }
+);
+Article.hasMany(Comment);
+Comment.belongsTo(Article);
 
 sequelize.sync().then(() => {
   console.log("Se han creado las tablas");
@@ -102,6 +124,21 @@ app.post("/admin/form_create", async (req, res) => {
     res.status(500).json({ error: "Error al crear un nuevo artículo" });
   }
 });
+
+app.post("/articleId/:id", async (req, res) => {
+  const { fullName, content } = req.body;
+  try {
+    const newComment = await Comment.create({
+      fullName,
+      content
+    });
+    res.redirect("/articleId/:id");
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Error al crear un nuevo comentario" });
+  }
+});
+
 
 app.get("/admin/form_edit/:id", async (req, res) => {
   const articleId = req.params.id;
@@ -172,12 +209,14 @@ app.get("/articleId/:id", async (req, res) => {
     const article = await Article.findByPk(articleId, {
       include: Author,
     });
+    const comments = await Comment.findAll();
 
     if (!article) {
       res.status(404).send("Article not found");
       return;
     }
-    res.render("articleId", { article });
+    console.log(comments);
+    res.render("articleId", { article, comments });
   } catch (error) {
     console.error("Error:", error);
     res.status(500).send("An error occurred.");

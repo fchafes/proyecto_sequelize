@@ -29,7 +29,7 @@
         <p><%= article.content %></p>
         <hr />
         <h3>Add your comment</h3>
-        <form action="">
+        <form action="/articleId/:id" method="post">
           <input
             type="text"
             id="commentName"
@@ -39,6 +39,13 @@
           <textarea class="form-control" id="textComment" rows="3"></textarea>
           <button type="submit" class="btn btn-primary mb-3">Send</button>
         </form>
+        <h2>Comments (...)</h2>
+        <% for (const comment of comments) {%>
+
+        <p><%= comment.fullName %></p>
+        <p><%= comment.content %></p>
+        <hr />
+        <% } %>
       </div>
       <%- include("partials/footer.ejs") %>
     </main>
