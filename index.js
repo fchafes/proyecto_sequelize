@@ -130,7 +130,7 @@ app.post("/articleId/:id", async (req, res) => {
   try {
     const newComment = await Comment.create({
       fullName,
-      content
+      content,
     });
     res.redirect("/articleId/:id");
   } catch (error) {
