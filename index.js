@@ -34,6 +34,13 @@ Article.init(
     title: { type: DataTypes.STRING(100) },
     content: { type: DataTypes.STRING },
     image: { type: DataTypes.STRING },
+    customDate: { type: DataTypes.VIRTUAL, get() {
+      const dayNumber = format(this.createdAt,"dd", { locale: esLocale });
+      const monthName = format(this.createdAt, "MMMM", { locale: esLocale });
+      const yearNumber = format(this.createdAt, "yyy", { locale: esLocale });
+      const formattedDate = `${dayNumber} de ${monthName}, ${yearNumber}`;
+      return formattedDate;
+    } },
   },
   { sequelize, modelName: "article", timestamps: true }
 );
@@ -49,20 +56,7 @@ app.get("/", async (req, res) => {
     const articles = await Article.findAll({
       include: Author,
     });
-    const formattedArticles = articles.map((article) => {
-      const dayNumber = format(article.createdAt, "dd", { locale: esLocale });
-      const monthName = format(article.createdAt, "MMMM", { locale: esLocale });
-      const yearNumber = format(article.createdAt, "yyyy", { locale: esLocale });
-      const formattedDate = `${dayNumber} de ${monthName}, ${yearNumber}`;
-
-      return {
-        ...article.toJSON(),
-        formattedDate,
-      };
-    });
-    console.log(formattedArticles);
-    // res.render("home", { articles, formattedDate });
-    res.render("home", { articles: formattedArticles });
+    res.render("home", { articles });
   } catch (error) {
     console.error("Error:", error);
     res.status(500).send("An error occurred.");
@@ -74,18 +68,7 @@ app.get("/admin", async (req, res) => {
     const articles = await Article.findAll({
       include: Author,
     });
-    const formattedArticles = articles.map((article) => {
-      const dayNumber = format(article.createdAt, "dd", { locale: esLocale });
-      const monthName = format(article.createdAt, "MMMM", { locale: esLocale });
-      const yearNumber = format(article.createdAt, "yyyy", { locale: esLocale });
-      const formattedDate = `${dayNumber} de ${monthName}, ${yearNumber}`;
-
-      return {
-        ...article.toJSON(),
-        formattedDate,
-      };
-    });
-    res.render("admin", { articles: formattedArticles });
+    res.render("admin", { articles });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Error al obtener los artículos" });
@@ -194,11 +177,7 @@ app.get("/articleId/:id", async (req, res) => {
       res.status(404).send("Article not found");
       return;
     }
-    const dayNumber = format(article.createdAt,"dd", { locale: esLocale });
-    const monthName = format(article.createdAt, "MMMM", { locale: esLocale });
-    const yearNumber = format(article.createdAt, "yyy", { locale: esLocale });
-    const formattedDate = `${dayNumber} de ${monthName}, ${yearNumber}`;
-    res.render("articleId", { article, formattedDate });
+    res.render("articleId", { article });
   } catch (error) {
     console.error("Error:", error);
     res.status(500).send("An error occurred.");
