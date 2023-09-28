@@ -2,82 +2,12 @@ require("dotenv").config();
 const express = require("express");
 const app = express();
 const path = require("path");
-const { Sequelize, Model, DataTypes } = require("sequelize");
-const { format } = require("date-fns");
-const esLocale = require("date-fns/locale/es");
+
+const { Article, Author, Comment } = require("./models/index");
 
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
-
-const sequelize = new Sequelize("bloger", "root", process.env.DB_PASSWORD, {
-  host: "127.0.0.1",
-  port: 3306,
-  dialect: "mysql",
-  // define: {
-  //   underscored: true,
-  // },
-});
-
-class Author extends Model {}
-Author.init(
-  {
-    id: { type: DataTypes.BIGINT, autoIncrement: true, primaryKey: true },
-    name: { type: DataTypes.STRING(100) },
-    lastname: { type: DataTypes.STRING(100) },
-    email: { type: DataTypes.STRING(100) },
-  },
-  { sequelize, modelName: "author", timestamps: true }
-);
-
-class Article extends Model {}
-Article.init(
-  {
-    id: { type: DataTypes.BIGINT, autoIncrement: true, primaryKey: true },
-    title: { type: DataTypes.STRING(100) },
-    content: { type: DataTypes.STRING },
-    image: { type: DataTypes.STRING },
-    customDate: {
-      type: DataTypes.VIRTUAL,
-      get() {
-        const dayNumber = format(this.createdAt, "dd", { locale: esLocale });
-        const monthName = format(this.createdAt, "MMMM", { locale: esLocale });
-        const yearNumber = format(this.createdAt, "yyy", { locale: esLocale });
-        const formattedDate = `${dayNumber} de ${monthName}, ${yearNumber}`;
-        return formattedDate;
-      },
-    },
-  },
-  { sequelize, modelName: "article", timestamps: true }
-);
-
-Article.belongsTo(Author);
-
-class Comment extends Model {}
-Comment.init(
-  {
-    id: { type: DataTypes.BIGINT, autoIncrement: true, primaryKey: true },
-    fullName: { type: DataTypes.STRING(100) },
-    content: { type: DataTypes.STRING },
-    customDate: {
-      type: DataTypes.VIRTUAL,
-      get() {
-        const dayNumber = format(this.createdAt, "dd", { locale: esLocale });
-        const monthName = format(this.createdAt, "MMMM", { locale: esLocale });
-        const yearNumber = format(this.createdAt, "yyy", { locale: esLocale });
-        const formattedDate = `${dayNumber} de ${monthName}, ${yearNumber}`;
-        return formattedDate;
-      },
-    },
-  },
-  { sequelize, modelName: "comment", timestamps: true }
-);
-Article.hasMany(Comment, { as: "comments" });
-Comment.belongsTo(Article, { foreignKey: "articleId" });
-
-sequelize.sync().then(() => {
-  console.log("Se han creado las tablas");
-});
 
 app.get("/", async (req, res) => {
   try {
