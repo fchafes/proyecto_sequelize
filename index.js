@@ -170,6 +170,17 @@ app.get("/articleId/:id", async (req, res) => {
   }
 });
 
+app.get("/api/articles", async (req, res) => {
+  try {
+    const allArticles = await Article.findAll();
+    res.json(allArticles);
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).json({ error: "An error occurred." });
+  }
+});
+
+
 app.listen(process.env.PORT, () => {
   console.log("Servidor corriendo en puerto");
 });
