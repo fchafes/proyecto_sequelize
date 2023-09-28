@@ -131,10 +131,12 @@ app.post("/admin/form_create", async (req, res) => {
 
 app.post("/articleId/:id", async (req, res) => {
   const { fullName, content } = req.body;
+  const articleId = req.params.id;
   try {
     const newComment = await Comment.create({
       fullName,
       content,
+      articleId: articleId,
     });
     res.redirect(`/article/${articleId}`);
   } catch (error) {
