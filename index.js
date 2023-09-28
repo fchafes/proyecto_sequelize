@@ -21,6 +21,18 @@ app.get("/", async (req, res) => {
   }
 });
 
+app.get("/api/data", async (req, res) => {
+  try {
+    const articles = await Article.findAll({
+      include: Author, 
+    });
+    res.json({ articles });
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).send("An error occurred.");
+  }
+});
+
 app.get("/admin", async (req, res) => {
   try {
     const articles = await Article.findAll({
