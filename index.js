@@ -53,6 +53,7 @@ Article.init(
 
 Article.belongsTo(Author);
 
+
 class Comment extends Model {}
 Comment.init(
   {
@@ -72,8 +73,8 @@ Comment.init(
   },
   { sequelize, modelName: "comment", timestamps: true }
 );
-Article.hasMany(Comment);
-Comment.belongsTo(Article);
+Article.hasMany(Comment, { as: "comments" })
+Comment.belongsTo(Article, { foreignKey: "articleId" });
 
 sequelize.sync().then(() => {
   console.log("Se han creado las tablas");
@@ -131,10 +132,12 @@ app.post("/admin/form_create", async (req, res) => {
 
 app.post("/articleId/:id", async (req, res) => {
   const { fullName, content } = req.body;
+  const articleId = req.params.id;
   try {
     const newComment = await Comment.create({
       fullName,
       content,
+      articleId: articleId,
     });
     res.redirect(`/article/${articleId}`);
   } catch (error) {
@@ -212,7 +215,7 @@ app.get("/articleId/:id", async (req, res) => {
     const article = await Article.findByPk(articleId, {
       include: Author,
     });
-    const comments = await Comment.findAll();
+    const comments = await Comment.findByPk(articleId, { include: Article, });
 
     if (!article) {
       res.status(404).send("Article not found");
