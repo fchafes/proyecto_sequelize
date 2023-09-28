@@ -57,10 +57,13 @@
             </h2>
 
             <% for (const comment of comments) {%>
-
-            <p><%= comment.fullName %></p>
-            <p><%= comment.content %></p>
-            <hr />
+            <div class="comment">
+              <blockquote class="comment-text">
+                "<%= comment.content %>"
+              </blockquote>
+              <p class="comment-author"><%= comment.fullName %></p>
+              <hr />
+            </div>
             <% } %>
           </div>
         </div>
