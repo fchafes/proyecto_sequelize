@@ -16,42 +16,54 @@
   <body>
     <%- include("partials/navbar.ejs") %>
     <header>
-      <div class="container">
-        <h1><%= article.title %></h1>
-        <p>
-          Creado por <%= article.author.name %> <%= article.author.lastname %>
-          el <%= article.customDate %>
-        </p>
+      <div class="header-container">
+        <div class="header-content">
+          <h1><%= article.title %></h1>
+          <p>
+            Creado por <%= article.author.name %> <%= article.author.lastname %>
+            el <%= article.customDate %>
+          </p>
+        </div>
       </div>
     </header>
     <main>
       <div class="container">
-        <p><%= article.content %></p>
-        <hr />
-        <h3>Add your comment</h3>
-        <form action="/articleId/<%= article.id %>" method="POST">
-          <input
-            type="text"
-            id="commentName"
-            class="form-control"
-            placeholder="Name"
-            name="fullName"
-          />
-          <textarea
-            class="form-control"
-            id="textComment"
-            rows="3"
-            name="content"
-          ></textarea>
-          <button type="submit" class="btn btn-primary mb-3">Send</button>
-        </form>
-        <h2>Comments (...)</h2>
-        <% for (const comment of comments) {%>
+        <div class="row">
+          <div class="col-md-6 offset-md-3 bg-white p-2">
+            <p class="article-content"><%= article.content %></p>
+            <hr />
+            <h3 class="article-comment"><strong>Add your comment</strong></h3>
 
-        <p><%= comment.fullName %></p>
-        <p><%= comment.content %></p>
-        <hr />
-        <% } %>
+            <form action="/articleId/<%= article.id %>" method="POST">
+              <input
+                type="text"
+                id="commentName"
+                class="form-control"
+                placeholder="Name"
+                name="fullName"
+              />
+              <textarea
+                class="form-control"
+                id="textComment"
+                rows="3"
+                name="content"
+              ></textarea>
+              <button type="submit" class="btn btn-primary mb-3">Send</button>
+            </form>
+            <h2 class="comment-title">
+              <% if (comments && comments.length > 0) { %>
+              <strong>Comments </strong>(<span><%= comments.length %></span>) <%
+              } else { %> No comments available. <% } %>
+            </h2>
+
+            <% for (const comment of comments) {%>
+
+            <p><%= comment.fullName %></p>
+            <p><%= comment.content %></p>
+            <hr />
+            <% } %>
+          </div>
+        </div>
       </div>
       <%- include("partials/footer.ejs") %>
     </main>
