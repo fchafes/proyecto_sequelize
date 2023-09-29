@@ -7,7 +7,7 @@ router.get("/", controller.allArticles)
   
   router.get("/api/data", controller.allArticlesJson) 
   
-  router.get("/admin", controller.allAriclesAdmin)
+  router.get("/admin", controller.allArticlesAdmin)
   
   router.get("/admin/form_create", controller.allAuthorsArticles)
   

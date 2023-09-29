@@ -24,7 +24,7 @@ async function allArticles (req, res){
     }
   };
   
-  async function allAriclesAdmin (req, res) {
+  async function allArticlesAdmin (req, res) {
     try {
       const articles = await Article.findAll({
         include: Author,
@@ -161,4 +161,4 @@ async function allArticles (req, res){
     }
   };
 
-  module.exports = {allArticles,allArticlesJson,allAriclesAdmin,allAuthorsArticles,createAuthorsArticle,createComment,editAuthorArticle,editAuthorsArticles,deleteArticle,articlebyPk};
+  module.exports = {allArticles,allArticlesJson,allArticlesAdmin,allAuthorsArticles,createAuthorsArticle,createComment,editAuthorArticle,editAuthorsArticles,deleteArticle,articlebyPk};
